@@ -1,0 +1,131 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Collision Detection</title>
+	<style type="text/css">
+		body{
+			margin: 10px;
+			background: #CCC;
+		}
+
+		#canvas{
+			background: #FFF;
+			border: #000 1px solid;
+		}
+	</style>
+	<script type="text/javascript">
+		var leftBtn = document.getElementById('leftBtn');
+		var rightBtn = document.getElementById('rightBtn');
+		var fireBtn = document.getElementById('fireBtn');
+		var status  = document.getElementById('status');
+
+		function initCanvas(){
+			var canvas  = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+
+			var enemies = [{"id": "enemy1", "x": 100, "y": -20, "width": 40, "height": 20},
+				{"id": "enemy2", "x": 225, "y": -20, "width": 40, "height": 20},
+				{"id": "enemy3", "x": 350, "y": -20, "width": 40, "height": 20},
+				{"id": "enemy4", "x": 100, "y": -70, "width": 40, "height": 20},
+				{"id": "enemy5", "x": 225, "y": -70, "width": 40, "height": 20},
+				{"id": "enemy6", "x": 350, "y": -70, "width": 40, "height": 20}
+			];
+
+			function renderEnemies(){
+				for(var i=0; i<enemies.length; i++){
+					var enemy = enemies[i];
+					context.fillStyle = "blue";
+					context.fillRect(enemy.x, enemy.y+=.5, enemy.width, enemy.height);
+				}
+			}
+
+			function Launcher(){
+				this.y          = 280;
+				this.x          = canvas.width*.5 -25;
+				this.width      = 50;
+				this.height     = 50;
+				this.background = "orange"; 
+				this.missiles   = [];
+				this.distance   = 5;
+				this.direction;
+
+				this.render     = function(){
+					if(this.direction == "left"){
+						this.x -= distance;
+					}else if(this.direction == "right"){
+						this.y  -= distance; 
+					}
+
+					context.fillStyle = this.background;
+					context.fillRect(this.x, this.y, this.width, this.height);
+
+					for(var i = 0; i<this.missiles.length; i++){
+						var missile = this.missiles[i];
+
+						context.fillStyle = missile.background;
+						context.fillRect(missile.x, missile.y, missile.width, missile.height);
+
+						this.hitDetect(missile, i);
+
+						//If a missile goes past the canvas boundaried,remove it
+						if(missile.y <= 0){ 
+							this.missiles.splice(i, 1);//Splice that missile out out of the missiles array
+						}
+					}
+
+					if(enemies.length ==0){
+						clearInterval(animateInterval);
+
+						context.fillStyle = "#FC0";
+						context.font      = "italic bold 36px Arial, sans-serif";
+						context.fillText("Level Complete", canvas.width*.5-130, 50, 130);
+					}
+				};
+				this.hitDetect  = function(missile, missileIndex){
+					for(var i=0; i<enemies.length; i++){
+						var enemy = enemies[i];
+						if(missile.x + missile.width >= enemy.x && missile.x <= enemy.x + enemy.width && missile.y >= enemy.y && missile.y <= enemy.y + enemy.height){
+
+							this.missiles.splice(this.missiles[missileIndex], 1); //Removes that missile from the missiles array if it
+							enemies.splice(i, 1); //Remove the enemy that the missile hit
+							status.innerHTML = "You destroyed" + enemy.id;
+
+						}
+					}
+				};
+			};
+
+			var launcher = new Launcher();
+
+			function animate(){
+				context.save();
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				//Drawing Starts here
+				launcher.render();
+				renderEnemies();
+				//Drawing ends here
+				context.restore();
+			}
+
+			var animateInterval = setInterval('animate', 30);
+		}
+
+
+
+		window.addEventListener('load', function(event){
+			initCanvas();
+		});
+
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<div>
+		<button id="leftBtn">Move Left</button>
+		<button id="rightBtn">Move Right</button>
+		<button id="fireBtn">Fire Missile</button>
+	</div>
+
+	<div id="status"></div>
+</body>
+</html>

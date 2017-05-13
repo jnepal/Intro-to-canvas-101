@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Animation</title>
+	<script type="text/javascript">
+		function initCanvas(){
+			var canvas  = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+			var y =0;
+
+			function animate(){
+				context.save(); //saves context
+				context.clearRect(0, 0, canvas.width, canvas.height);
+
+				//Draw Here
+				context.fillStyle = "magenta";
+				context.fillRect(0, y, 50, 50);
+				y++;
+				
+				context.restore(); //Restores the saved context
+
+				
+			}
+
+			var animateInterval = setInterval(animate, 30);//every 30 milli second the animate function is going to fire
+
+			canvas.addEventListener('click', function(){
+				clearInterval(animateInterval);
+			});
+		}
+
+		window.onload = function(){
+			initCanvas();
+		}
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="300"></canvas>
+</body>
+</html>

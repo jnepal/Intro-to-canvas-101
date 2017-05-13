@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>OOP Assests</title>
+	<script type="text/javascript">
+		function initCanvas(){
+			var canvas  = document.getElementById("canvas");
+			var context = canvas.getContext("2d");
+			var y , x;
+
+			function RectObj(){
+				this.x =0;
+				this.y =0;
+
+				this.render = function(context, rX, rY, rW, rH, color){
+					context.fillStyle = color;
+					context.fillRect(rX, rY, rW, rH);
+				};
+			}
+
+			var rect1 = new RectObj();
+			var rect2 = new RectObj();
+
+			console.log(rect1);
+			function animate(){
+				context.save(); //saves context
+				context.clearRect(0, 0, canvas.width, canvas.height);
+				
+				//Draw Here
+				rect1.render(context, rect1.x, rect1.y, 50, 50, "magenta");
+				rect2.render(context, rect2.x, rect2.y, 50, 50, "blue");
+				rect1.x++;
+				rect2.y++;
+				
+				context.restore(); //Restores the saved context
+
+				
+			}
+
+			var animateInterval = setInterval(animate, 30);//every 30 milli second the animate function is going to fire
+
+			canvas.addEventListener('click', function(){
+				clearInterval(animateInterval);
+			});
+		}
+
+		window.onload = function(){
+			initCanvas();
+		}
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="300"></canvas>
+</body>
+</html>

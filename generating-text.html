@@ -1,0 +1,43 @@
+<html>
+<head>
+	<title>Generating Text</title>
+</head>
+<body>
+	<canvas id="canvas" widht="900" height="900"></canvas>
+	<script type="text/javascript">
+		var canvas  = document.querySelector('#canvas');
+		var context = canvas.getContext('2d');
+
+		/**
+		//Stroke color properties
+
+		context.strokeStyle = "black";
+
+		//Dealing with text
+		context.strokeText("Hello Udacity",50 ,10 );//50,10 is the starting point form which text is displayed
+
+		//Fill color properties
+		context.fillStyle    = "blue";
+		context.fillText("Hello Udacity", 70, 40);
+		**/
+
+		//Different properties
+		//ctx.font = "italic bold 56px Arial, sans-serif"// if arial font not found use sans-serif
+    	context.textAlign   = 'center'; //start, end, left, right, center
+      	context.textBaseLine = 'alphabetic'; // top, middle, bottom, hanging, alphabetic, ideographic
+    	context.strokeStyle = 'black';
+    	context.linewidth   = 3;
+    	context.fillStyle   = 'white';
+
+		context.font  = "36pt Impact";
+		context.textAlign = "center";
+
+		context.fillStyle = "white";
+		context.fillText("CANVAS MEMES!", canvas.width/2, 50);
+
+		context.strokeStyle = "black";
+		context.lineWidth   = 3;
+		context.strokeText("CANVAS MEMES!", canvas.width/2, 50);
+	</script>
+</body>
+</html> 

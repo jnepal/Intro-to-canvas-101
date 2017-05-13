@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Transformation</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+
+	<script type="text/javascript">
+		var canvas  = document.querySelector("#canvas");
+		var context = canvas.getContext("2d");
+
+
+		context.fillStyle = "#FC0";
+		context.fillRect(50, 50, 100, 100);
+		
+		/** Scaling **/
+		//context.scale(0.5, 0.5);
+		//scale factor x and y as parameter; default is Sx = Sy =1
+		/** Rotation **/
+		//context.rotate(0.15); //angle in radian
+
+		/** Translation **/
+		//context.translate(-20, -50); //Tx, Ty as parameter
+
+		/** Tranformation **/
+		//context.transform(xScale, ySkew, xSkew, yScale, Tx, Ty);
+		//Default is (1, 0, 0, 1, 0, 0)
+		context.transform(1, 0, 0.3, 1, 0, 0);
+
+		//Another Method 
+		//context.transform(xScale, ySkew, xSkew, yScale, Tx, Ty) which first sets the present transformation value to default matrix and agains sets the transformation as defined
+		context.fillRect(250, 50, 100, 100);
+	</script>
+</body>
+</html>

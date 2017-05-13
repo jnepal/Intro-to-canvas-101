@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Composition</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+
+	<script type="text/javascript">
+		var canvas        = document.getElementById("canvas");
+		var context       = canvas.getContext("2d");
+
+		//globalAlpha = 0.0 -1.0;
+		//globalCompositeOperation = source-atop || source-in || source-out || source-over || source-over (default) || destination-atop || destination-in || destination-out || destination-over || lighter || copy || xor
+
+		context.fillStyle                = "magenta";
+		context.fillRect(20, 20, 100, 100);
+
+		context.globalAlpha              = 1;  //Opacity betweent 0-1
+		context.globalCompositeOperation = "xor";
+
+		context.fillStyle                = "blue";
+		context.fillRect(40, 40, 100, 100);
+
+	</script>
+</body>
+</html>

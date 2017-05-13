@@ -1,0 +1,110 @@
+ <!DOCTYPE HTML>
+<html>
+<head>
+	<title>Drawing Shapes</title>
+</head>
+<body>
+	<canvas id="canvas" width="1600" height="1600"></canvas>
+
+	<script type="text/javascript">
+		var canvas  = document.querySelector("#canvas");
+		var context = canvas.getContext("2d");
+
+		/**Rectangle **/
+		//Rectangle can be created using rect.But when rect method is used the rectangle is only visible when used stroke or fill after it
+
+		// context.rect(250, 250, 300, 300);
+		// context.stroke();
+		
+		//fillRect draws the rectangle and fills the rectangle
+		context.fillRect(100, 100, 100, 100)//starting point, ending point, width, height
+
+		//strokeRect draws the Rectangle
+		context.strokeRect(50, 50, 50, 50);
+
+
+		/** Clipping of Rectangle **/
+		context.rect(300, 300, 150, 150);
+		context.clip();
+		context.rect(250, 250, 100, 100);
+		context.stroke();
+
+		/** Drawing Arc **/
+		
+		//context.arc(x, y, stratAngle, endAngle, anticlockwise);
+		//anticlockwise is boolean; false is default
+
+		context.arc(300, 300, 50, 0, MATH.PI*2, false);
+		context.stroke();
+
+		//Next Arc Method
+		//context.arcTo(x1, y1, x2, y2, radius);
+		//context.quadraticCurveTo(controlPoint X, controlPoint Y, x, y);
+		//context.bezierCurveTo(controlPoint 1 X, controlPoint 1 Y, controlPoint 2 X, controlPoint 2 Y, x, y);
+		context.moveTo(50, 50);
+		context.lineTo(300, 50);
+		//context.arcTo(350, 50, 350, 100, 50);
+		//context.quadraticCurveTo(300, 100, 390, 100);
+		context.bezierCurveTo(200, 100, 120, 140, 390, 100);
+		context.lineTo(350, 200);
+		context.stroke();
+
+		/** Drawing Line **/
+
+		context.beginPath();
+		context.moveTo(10,10);//moves the pixel to given pixel
+		context.lineTo(50,50);// draws the line from cordinate 10,10
+		context.lineTo(50,10);
+		context.lineTo(10,10); //instead of this we could use context.closePath()
+
+		//context.isPointOnPath(x,y) //gives whether the given point is on specified path or not; returns true or false
+
+		/** Stroke and Fill Properties **/
+		//We could change the color of fill and canvas
+		context.fillStyle   = "blue"; // color, hex value , rgba() (alpha for opaque/opacity) , gradient, pattern
+		context.strokeStyle = "#CC3333";
+		
+		/** Line Properties **/
+		context.lineWidth   = 3; //Line width
+		// context.lineCap     = "round"; // defines starting and ending edges of line (butt, round, square )
+		// context.lineJoin    = "miter"; // bevel, round, miter
+		// context.miterLimit  = 2; //Gets rid of pointy edge
+		// context.setLineDash([20, 10, 30]);// converts the line to dash; number defines what size of dashed line in pixel is to be drawn; if provided 2nd number defines the gap between the lines; if provided with 3rd number defines the size of next dashed line (20 pixel of first dashed line, gap of 10 pixel and again 30 pixel of second dashed line)
+		
+		// context.lineDashOffset = 40; //Used for animation
+
+		//context.getLineDash(); //give the Line Dash Property
+
+
+		
+		//lineTo creates a line but isn't visible until we fill or stroke 
+
+		context.fill();
+		//context.stroke();
+
+		//Clears the canvas within the specified Rectangle
+		//context.clearRect(0, 0, 100, 100)
+
+		//Creating Gradient
+		//Whenever we create gradient we have to addColorStop
+		var gradientOne = context.createLinearGradient(50, 50, 100, 200); //starting x,y and ending x,y(width, height) width 0 and somevalue of height will make gradient go from top to bottom.Similarly some value of width and height 0 will make gradient go from left to right 
+		gradientOne.addColorStop(0, "magenta"); //starting point of color magenta
+		gradientOne.addColorStop(1, "black");
+
+		//context.fillStyle   = gradientOne;
+
+		//creating RadialGradient
+
+		var gradientTwo = context.createRadialGradient(50, 50, 0, 100, 200 , 250) //starting point x,y , radius 1, ending point (x,y) or width, height , radius 2
+
+		//for Pattern
+
+		// var image = new Image();
+		// image.src = "";
+
+		// var pattern = context.createPattern(image, "repeat"); //repeat repeats x and y. we could use repeat x or repeat y instead
+
+		
+	</script>
+</body>
+</html>

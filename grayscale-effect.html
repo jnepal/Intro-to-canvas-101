@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Grayscale Effect</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+</body>
+	<script type="text/javascript">
+		var canvas   = document.querySelector('#canvas');
+		var context  = canvas.getContext("2d");
+
+		var image    = new Image();
+		image.onload = function(){
+			console.log('Image Loaded');
+			//context.drawImage(image, clipX, clip Y, clip Width, clip Height, x, y, width, height)
+			//Clip values like Clip x could be positive as well as negative
+			context.drawImage(image, 0, 0, image.width, canvas.height);
+			makeGrayScale();
+		};
+
+		image.src = "img/suprise.jpg";
+
+
+		var makepixelGrayScale = function(r, g, b, a){
+			var y = (0.3 * r)+(0.59 * g)+(0.11 * b);
+
+			return {r: y, g: y, b: y, a: y};
+		}
+		function makeGrayScale(){
+			var r, b, g, a;
+			var imageData    = context.getImageData(0,0, 500,500);
+			//var imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+			var numPixels = imageData.data.length/4;
+
+			for(var i=0; i<numPixels; i++){
+				r = imageData.data[i * 4 + 0];
+				g = imageData.data[i * 4 + 1];
+				b = imageData.data[i * 4 + 2];
+				a = imageData.data[i * 4 + 3];
+
+				pixel = makepixelGrayScale(r, g, b, a);
+				
+				imageData.data[i * 4 + 0] = pixel.r;
+				imageData.data[i * 4 + 1] = pixel.g;
+				imageData.data[i * 4 + 2] = pixel.b;
+				imageData.data[i * 4 + 3] = pixel.a;
+				
+			}
+
+			context.putImageData(imageData, 0, 0);
+		}
+	</script>
+</html>

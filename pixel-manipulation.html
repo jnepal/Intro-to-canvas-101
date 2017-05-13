@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Pixel Manipulation</title>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+
+	<script type="text/javascript">
+		var canvas        = document.getElementById("canvas");
+		var context       = canvas.getContext("2d");
+
+		context.fillStyle = "magenta";
+		context.fillRect(20, 20, 100, 100);
+		context.fillStyle = "blue";
+		context.fillRect(40, 40, 100, 100);
+
+		//context.getImageData(x, y, width, height);//Returns the rgba value of the source
+		var imageData     = context.getImageData(20, 20, 50, 50);
+		//context.putImageData(imageData, x, y);//Plots the imageData to the given pixels
+		//context.putImageData(imageData, 250,250);
+
+		//context.createImageData(width, height); //creates a new blank imageData
+		var copy         = context.createImageData(imageData.width, imageData.height); //could also provide imageData only as parameter
+		//console.log(copy.data);
+
+		//Assigning imageData to copy
+		for(var i = 0; i < copy.data.length; i++){
+			copy.data[i] = imageData.data[i];
+		}
+
+		//can also be done by
+		//copy.data.set(imageData.data);//doesn't work for internet explorer
+
+		context.putImageData(copy, 250,250)
+
+	</script>
+</body>
+</html>

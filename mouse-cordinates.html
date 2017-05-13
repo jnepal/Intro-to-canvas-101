@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Mouse Cordinates</title>
+	<script type="text/javascript">
+		function initCanvas(){
+			var canvas  = document.getElementById('canvas');
+			var context = canvas.getContext('2d');
+
+			//canvas.onmousemove
+			canvas.addEventListener('mousemove', function(event){
+
+				var mouseX = event.clientX - canvas.offsetLeft;
+				var mouseY = event.clientY - canvas.offsetTop;
+				var status = document.getElementById('status');
+
+				
+				status.innerHTML = mouseX +" | "+ mouseY;
+
+			});
+
+			canvas.addEventListener('click', function(event){
+				var mouseX = event.clientX - canvas.offsetLeft;
+
+				var mouseY = event.clientY - canvas.offsetTop;
+
+				context.fillStyle = "orange";
+				context.fillRect(mouseX-10, mouseY-10, 20, 20);
+			});
+		}
+
+		window.addEventListener('load', function(event){
+			//console.log(event);
+			initCanvas();
+		});
+	</script>
+</head>
+<body>
+	<canvas id="canvas" width="500" height="500"></canvas>
+	<h2 id="status">0 | 0</h2>
+</body>
+</html>

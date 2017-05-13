@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Video Frame</title>
+</head>
+<body>
+	<video id="video" controls loop src="../meromaya.mp4" width="500" height="500"></video>
+	<canvas id="canvas" width="500" height="500"></canvas>
+</body>
+	<script type="text/javascript">
+		var canvas  = document.querySelector("canvas");
+		var context = canvas.getContext("2d");
+
+		document.addEventListener('DOMContentLoaded', function(){
+
+			var video = document.querySelector("video");
+
+			video.addEventListener('loadedmetadata', function(){
+				canvas.width  = this.videoWidth;
+				canvas.height = this.videoHeight;
+			});
+
+			var draw = function(){
+				context.drawImage(video, 0, 0);
+				requestAnimationFrame(draw);
+			}
+
+			video.addEventListener('play', function(){
+				if(video.paused || video.ended){
+					return;
+				}
+				draw();
+			});
+		});
+	</script>
+</html>
